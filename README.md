@@ -1,6 +1,6 @@
 
-# Rafflemania
-
+# Rafflemania - Polygon Buidl It - Summer 22'
+## ** I removed commit history because I accidentally leaked my private key. Oops**
 <img src="https://github.com/Pack-Way/Raffle-mania/blob/main/public/RaffleMania.png" width="600">
 
 ## Features
