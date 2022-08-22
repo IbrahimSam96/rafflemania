@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  src: url("https://www.axis-praxis.org/fonts/webfonts/MetaVariableDemo-Set.woff2")
+    format("woff2");
+  font-family: "Meta";
+  font-style: normal;
+  font-weight: normal;
+}
+
+.main2 {
+  -webkit-text-stroke: 4px #08e75e;
+  font-variation-settings: "wght" 900, "ital" 1;
+  color: transparent;
+  font-family: "Meta", sans-serif;
+  font-variation-settings: "wght" 100, "ital" 0;
+  text-shadow: none;
+}
+
+.main {
+  transition: all 0.5s;
+  -webkit-text-stroke: 4px #08e75e;
+  font-variation-settings: "wght" 900, "ital" 1;
+  color: transparent;
+  font-family: "Meta", sans-serif;
+  text-shadow: 10px 10px 0px #b270f2, 15px 15px 0px #e601c0,
+    20px 20px 0px #e9019a, 25px 25px 0px #03aff3, 45px 45px 10px #482896;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Mr+Dafoe);
+.connect {
+  margin: 0px;
+  font-family: "Mr Dafoe", cursive;
+  color: #f975f7;
+  -webkit-text-stroke: 1px #f008b7;
+  -webkit-filter: drop-shadow(2px 2px 20px #f008b7);
+  z-index: 20;
+}
+
+/* Shine */
+.shineEffect {
+  -webkit-mask-image: linear-gradient(
+    60deg,
+    black 25%,
+    rgba(0, 0, 0, 0.2) 50%,
+    black 75%
+  );
+  -webkit-mask-size: 400%;
+  -webkit-mask-position: 0%;
+}
+.shineEffect:hover {
+  -webkit-mask-position: 100%;
+  transition: mask-position 1s ease, -webkit-mask-position 1s ease;
+}
+
+.root {
+  --toastify-color-dark: #1e1d45;
+  --toastify-color-progress-dark: #bb86fc;
+}
+
+.ToasToastify__toastify-color-progress-dark {
+  color: #e601c0;
+}

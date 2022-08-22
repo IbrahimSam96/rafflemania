@@ -1,0 +1,1 @@
+export const polygonAddress = "0x294f92cFB248B35D9dD00a0689FE932D1B02ea69"
