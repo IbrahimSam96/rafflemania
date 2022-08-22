@@ -1,1 +1,1 @@
-export const polygonAddress = "0x294f92cFB248B35D9dD00a0689FE932D1B02ea69"
+export const ethAddress = "0xe59E6d539cA3FA0125C800fF9ade86fB44F67E67"

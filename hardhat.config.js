@@ -9,12 +9,12 @@ module.exports = {
         },
         Goerli: {
             url: 'https://eth-goerli.g.alchemy.com/v2/rVFVo_X3IvmhdA1s-9yBBrptPnjnFBbT',
-            accounts: [process.env.NEXT_PUBLIC_privateKey],
+            accounts: [process.env.privateKey],
             chainId: 5
         },
         Mumbai: {
             url: 'https://polygon-mumbai.g.alchemy.com/v2/tSpg5zjh4lrrDfRaY1FA5p1Y-h_5vRuu',
-            accounts: [process.env.NEXT_PUBLIC_privateKey],
+            accounts: [process.env.privateKey],
             chainId: 80001
         },
     },
