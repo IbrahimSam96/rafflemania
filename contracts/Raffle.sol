@@ -31,6 +31,8 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     uint32 private immutable i_callbackGasLimit;
     uint16 private constant REQUEST_CONFIRMATIONS = 3;
     uint256 private immutable i_interval;
+    uint256 private immutable i_mania_interval;
+
     // Structs
     struct raffle {
         uint256 entranceFee;
@@ -41,19 +43,35 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         uint256 balance;
         bytes32 name;
     }
+
+    struct raffleMania {
+        uint256 lastTimeStamp;
+        address recentWinner;
+        address payable[] players;
+        RaffleState raffleState;
+        uint256 balance;
+    }
+
     // Raffle Variables
     raffle[] public s_raffles;
     mapping(uint256 => bool) s_raffleToPerform;
-    // Events
+    // RaffleMania Variables
+    raffleMania public s_raffleMania;
+    bool public raffleManiaToPerform;
+    // Raffle Events
     event RaffleEnter(address indexed player, uint256 raffleEntered);
     event RaffleCalculating(uint256 rafflePerforming);
     event RaffleWon(address indexed player, uint256 raffleWon);
+    // RaffleMania Events
+    event RaffleManiaWon(address indexed player, uint256 amount);
+    event RaffleManiaCalculating(RaffleState state);
 
     constructor(
         address vrfCoordinatorV2,
         uint64 subscriptionId,
         bytes32 gasLane, // keyHash
         uint256 interval,
+        uint256 maniaInterval,
         uint32 callbackGasLimit
     ) VRFConsumerBaseV2(vrfCoordinatorV2) {
         // Initialize VRF variables to performUpkeep
@@ -62,7 +80,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         i_interval = interval;
         i_subscriptionId = subscriptionId;
         i_callbackGasLimit = callbackGasLimit;
-
+        i_mania_interval = maniaInterval;
         // Creating 4 raffles each with the respective entranceFee  0.01, 0.25, 0.5, 1
 
         s_raffles.push(
@@ -130,9 +148,11 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         }
         /**
          * @dev This is the function that allows 'players' to join the raffle
-         * the following should be true to add players to an array of players for that specific raffle:
+         * the following conditions should be true to add players to an array of players for that specific raffle:
          * 1. msg.value == entrance fee.
          * 2. The lottery is open.
+
+         @dev This function allocated 3% to RaffleMania and 95% to the raffle.  
          */
 
         // Number of Raffles available
@@ -143,14 +163,35 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
             if (s_raffles[i].entranceFee == msg.value) {
                 // Needs to be Open
                 if (s_raffles[i].raffleState == RaffleState.OPEN) {
-                    // If no players are in the raffle, activate timer for draw
+                    // If no players are in the raffle, activate timer.
                     if (s_raffles[i].players.length == 0) {
                         s_raffles[i].lastTimeStamp = block.timestamp;
                     }
-                    // Otherwise add next player to raffle players array and increase raffle balance
+                    // Otherwise add next player to raffle and increase raffle balance
                     s_raffles[i].players.push(payable(msg.sender));
-                    s_raffles[i].balance += msg.value;
+                    s_raffles[i].balance += (msg.value / 100) * 95;
                     emit RaffleEnter(msg.sender, i);
+
+                    // Rafflemania
+                    // If raffleMania is performing return 3% to sender for not Qualifiying.
+                    if (s_raffleMania.raffleState == RaffleState.CALCULATING) {
+                        (bool success, ) = msg.sender.call{
+                            value: (msg.value / 100) * 3
+                        }("");
+
+                        if (!success) {
+                            revert Raffle__TransferFailed();
+                        }
+                    }
+                    // Otherwise check if raffle needs activating timer and then add player and balances.
+                    else {
+                        // If no players are in the raffle, activate timer.
+                        if (s_raffleMania.players.length == 0) {
+                            s_raffleMania.lastTimeStamp = block.timestamp;
+                        }
+                        s_raffleMania.balance += (msg.value / 100) * 3;
+                        s_raffleMania.players.push(payable(msg.sender));
+                    }
                 }
             } else {}
         }
@@ -185,7 +226,20 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
                 i_interval);
             bool hasPlayers = s_raffles[i].players.length > 0;
             upkeepNeeded = (timePassed && isOpen && hasPlayers);
-            // If any raffle returns upkeepNeeded == true, then we break loop to performUpkeep
+            // If any raffle returns upkeepNeeded == true, then we break loop and return upkeepNeeded
+            if (upkeepNeeded) {
+                break;
+            }
+            // Check if RaffleMania requires  upkeepNeeded
+            bool mania_isOpen = s_raffleMania.raffleState == RaffleState.OPEN;
+            bool mania_timePassed = ((block.timestamp -
+                s_raffleMania.lastTimeStamp) > i_mania_interval);
+            bool mania_hasPlayers = s_raffleMania.players.length > 0;
+
+            upkeepNeeded = (mania_timePassed &&
+                mania_isOpen &&
+                mania_hasPlayers);
+            // Reassigning upkeepNeeded to check if it returns true, then we break loop and return upkeepNeeded
             if (upkeepNeeded) {
                 break;
             }
@@ -209,10 +263,12 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
 
         // Number of Raffles available
         uint256 raffleCount = s_raffles.length;
-        // Number of random words to request
+        // Number of random words to request from Chainlink VRF
         uint32 NUM_WORDS;
         // bool check for every raffle if it needs to perform
         bool m_upkeepNeeded;
+        // bool check for raffleMania if it needs to perform
+        bool mania_upkeepNeeded;
 
         for (uint256 i = 0; i < raffleCount; i++) {
             bool isOpen = s_raffles[i].raffleState == RaffleState.OPEN;
@@ -221,7 +277,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
             bool hasPlayers = s_raffles[i].players.length > 0;
             m_upkeepNeeded = (timePassed && isOpen && hasPlayers);
 
-            // This raffle needs to perform: Increase number of words required from VRF + Mark this raffle in the map that it needs to perform.
+            // This raffle needs to perform: Increase number of words required from VRF + Mark this raffle that it needs to perform.
             if (m_upkeepNeeded) {
                 NUM_WORDS++;
                 s_raffleToPerform[i] = true;
@@ -231,6 +287,24 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
                 s_raffleToPerform[i] = false;
             }
         }
+
+        // RaffleMania check if it needs to perform
+        bool mania_isOpen = s_raffleMania.raffleState == RaffleState.OPEN;
+        bool mania_timePassed = ((block.timestamp -
+            s_raffleMania.lastTimeStamp) > i_mania_interval);
+        bool mania_hasPlayers = s_raffleMania.players.length > 0;
+
+        mania_upkeepNeeded = (mania_timePassed &&
+            mania_isOpen &&
+            mania_hasPlayers);
+
+        if (mania_upkeepNeeded) {
+            raffleManiaToPerform = true;
+            NUM_WORDS++;
+            s_raffleMania.raffleState = RaffleState.CALCULATING;
+            emit RaffleManiaCalculating(RaffleState.CALCULATING);
+        }
+
         // Initiate request for random words
         uint256 requestId = i_vrfCoordinator.requestRandomWords(
             i_gasLane,
@@ -266,7 +340,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
                 // Reseting VARIABLES
                 s_raffles[i].raffleState = RaffleState.OPEN;
                 s_raffles[i].players = new address payable[](0);
-                s_raffles[i].lastTimeStamp = block.timestamp;
+                s_raffles[i].lastTimeStamp = 0;
                 s_raffleToPerform[i] = false;
 
                 emit RaffleWon(recentWinner, i);
@@ -281,6 +355,30 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
                 s_raffles[i].balance = 0;
             }
         }
+
+        if (raffleManiaToPerform) {
+            uint256 indexofWinner = randomWords[wordToChoose] %
+                s_raffleMania.players.length;
+            address payable recentWinner = s_raffleMania.players[indexofWinner];
+            s_raffleMania.recentWinner = recentWinner;
+            // Reseting VARIABLES
+            s_raffleMania.raffleState = RaffleState.OPEN;
+            s_raffleMania.players = new address payable[](0);
+            s_raffleMania.lastTimeStamp = 0;
+            raffleManiaToPerform = false;
+
+            emit RaffleManiaWon(recentWinner, s_raffleMania.balance);
+
+            (bool success, ) = recentWinner.call{value: s_raffleMania.balance}(
+                ""
+            );
+
+            if (!success) {
+                revert Raffle__TransferFailed();
+            }
+            // Reset Raffle Balance AFTER success
+            s_raffleMania.balance = 0;
+        }
     }
 
     // View / Pure Functions
@@ -290,5 +388,10 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
 
     function getallRaffles() public view returns (raffle[] memory) {
         return s_raffles;
+    }
+
+    function getRaffleManiaCount() public view returns (uint256 length) {
+        length = s_raffleMania.players.length;
+        return length;
     }
 }

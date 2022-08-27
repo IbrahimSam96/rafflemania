@@ -56,10 +56,23 @@
 }
 
 .root {
-  --toastify-color-dark: #1e1d45;
+  --toastify-color-dark: #238179 !important;
   --toastify-color-progress-dark: #bb86fc;
 }
 
 .ToasToastify__toastify-color-progress-dark {
   color: #e601c0;
+}
+
+.swiper-button-prev {
+  color: #1e1d45 !important;
+}
+.swiper-button-next {
+  color: #1e1d45 !important;
+}
+.swiper-button-prev:hover {
+  color: #08e75e !important;
+}
+.swiper-button-next:hover {
+  color: #08e75e !important;
 }

@@ -1,0 +1,1 @@
+export const bnbAddress = "0xF0Fc1203988C36c65e17d22e1145E515BcE0088C"

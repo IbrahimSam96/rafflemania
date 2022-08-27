@@ -17,6 +17,16 @@ module.exports = {
             accounts: [process.env.privateKey],
             chainId: 80001
         },
+        Binance: {
+            url: 'https://rpc.ankr.com/bsc_testnet_chapel',
+            accounts: [process.env.privateKey],
+            chainId: 97
+        },
+        Avalanche: {
+            url: 'https://rpc.ankr.com/avalanche_fuji',
+            accounts: [process.env.privateKey],
+            chainId: 43113
+        },
     },
     solidity: {
         version: "0.8.4",
