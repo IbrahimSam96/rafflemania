@@ -49,20 +49,20 @@ const Home = () => {
 
   const toastId = useRef(null);
   // Polygon Raffles + RaffleMania
-  const [polygonRaffles, setPolygonRaffles] = useState([]);
-  const [polygonMania, setPolygonMania] = useState([]);
+  const [polygonRaffles, setPolygonRaffles] = useState(undefined);
+  const [polygonMania, setPolygonMania] = useState(undefined);
 
   // ETH Raffles + RaffleMania
-  const [ethRaffles, setEthRaffles] = useState([]);
-  const [ethereumMania, setEthereumMania] = useState([]);
+  const [ethRaffles, setEthRaffles] = useState(undefined);
+  const [ethereumMania, setEthereumMania] = useState(undefined);
 
   // Binance Raffles + RaffleMania
-  const [bcsRaffles, setBcsRaffles] = useState([]);
-  const [binanceMania, setBinanceMania] = useState([]);
+  const [bcsRaffles, setBcsRaffles] = useState(undefined);
+  const [binanceMania, setBinanceMania] = useState(undefined);
 
   // Avalanche Raffles + RaffleMania
-  const [avaxRaffles, setAvaxRaffles] = useState([]);
-  const [avalancheMania, setAvalancheMania] = useState([]);
+  const [avaxRaffles, setAvaxRaffles] = useState(undefined);
+  const [avalancheMania, setAvalancheMania] = useState(undefined);
 
 
 
@@ -663,10 +663,44 @@ const Home = () => {
         <span className={`col-start-1 col-end-8 row-start-2 row-end-3 mx-4 mt-4 `}>
 
           <Marquee gradient={false} className={`bg-[transparent] border-x-2 border-[#1e1d45] hover:border-[#6FCF97] `}>
-            <RaffleMania mania={polygonMania} chain={"Polygon"} />
-            <RaffleMania mania={polygonMania} chain={"Ethereum"} />
-            <RaffleMania mania={polygonMania} chain={"Binance"} />
-            <RaffleMania mania={polygonMania} chain={"Avalanche"} />
+            {polygonMania ?
+              <RaffleMania mania={polygonMania} chain={"Polygon"} />
+              :
+              <span className={`flex mt-2 w-[430px] h-[50px] overflow-hidden bg-[#1e1d45] p-2 rounded ml-2 `}>
+                <span className={`block bg-[grey] w-[35px] h-[35px] rounded-full animate-pulse`}>  </span>
+                <span className={`block bg-[grey] ml-2 w-[290px] h-[35px] rounded animate-pulse `}>  </span>
+                <span className={`block bg-[grey] ml-2 w-[100px] h-[35px] rounded animate-pulse `}>  </span>
+              </span>
+            }
+
+            {ethereumMania ?
+              <RaffleMania mania={ethereumMania} chain={"Ethereum"} />
+              :
+              <span className={`flex mt-2 w-[430px] h-[50px] overflow-hidden bg-[#1e1d45] p-2 rounded ml-2 `}>
+                <span className={`block bg-[grey] w-[35px] h-[35px] rounded-full animate-pulse`}>  </span>
+                <span className={`block bg-[grey] ml-2 w-[290px] h-[35px] rounded animate-pulse `}>  </span>
+                <span className={`block bg-[grey] ml-2 w-[100px] h-[35px] rounded animate-pulse `}>  </span>
+              </span>
+            }
+
+            {binanceMania ?
+              <RaffleMania mania={binanceMania} chain={"Binance"} />
+              :
+              <span className={`flex mt-2 w-[430px] h-[50px] overflow-hidden bg-[#1e1d45] p-2 rounded ml-2 `}>
+                <span className={`block bg-[grey] w-[35px] h-[35px] rounded-full animate-pulse`}>  </span>
+                <span className={`block bg-[grey] ml-2 w-[290px] h-[35px] rounded animate-pulse `}>  </span>
+                <span className={`block bg-[grey] ml-2 w-[100px] h-[35px] rounded animate-pulse `}>  </span>
+              </span>
+            }
+
+            {avalancheMania ?
+              <RaffleMania mania={avalancheMania} chain={"Avalanche"} />
+              :
+              <span className={`flex mt-2 w-[430px] h-[50px] overflow-hidden bg-[#1e1d45] p-2 rounded ml-2 `}>
+                <span className={`block bg-[grey] w-[35px] h-[35px] rounded-full animate-pulse`}>  </span>
+                <span className={`block bg-[grey] ml-2 w-[290px] h-[35px] rounded animate-pulse `}>  </span>
+                <span className={`block bg-[grey] ml-2 w-[100px] h-[35px] rounded animate-pulse `}>  </span>
+              </span>}
 
           </Marquee>
         </span>
@@ -692,28 +726,49 @@ const Home = () => {
             className={`w-full mb-8`}
             loop={true}
           >
+            {polygonRaffles ?
 
-            {polygonRaffles.map((raffle, index) => {
+              polygonRaffles.map((raffle, index) => {
 
-              var time = parseInt(raffle.lastTimeStamp._hex)
-              var lastTimeStamp = new Date(time * 1000 + 1000 * 60 * 2);
+                var time = parseInt(raffle.lastTimeStamp._hex)
+                var lastTimeStamp = new Date(time * 1000 + 1000 * 60 * 2);
 
-              return (
-                <SwiperSlide key={index}>
+                return (
+                  <SwiperSlide key={index}>
 
-                  <RaffleComponent
-                    key={index}
-                    raffle={raffle}
-                    index={index}
-                    lastTimeStamp={lastTimeStamp}
-                    chain={"Polygon"}
-                    currency={"MATIC"}
-                    enterRaffle={enterRaffle}
-                  />
-                </SwiperSlide >
+                    <RaffleComponent
+                      key={index}
+                      raffle={raffle}
+                      index={index}
+                      lastTimeStamp={lastTimeStamp}
+                      chain={"Polygon"}
+                      currency={"MATIC"}
+                      enterRaffle={enterRaffle}
+                    />
+                  </SwiperSlide >
 
-              )
-            })}
+                )
+              })
+
+              :
+
+              <SwiperSlide >
+                <span className={`col-start-1 row-start-2 row-end-3 grid grid-rows-[50px,50px,50px,50px,50px,50px,50px] max-w-[600px] bg-[#1e1d45] rounded mx-auto	 `}>
+
+                  <span className={`bg-[grey] mx-auto w-[80%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-auto w-[80%] self-center h-[35px] rounded animate-pulse `}>  </span>
+
+                </span>
+
+              </SwiperSlide >
+
+
+            }
           </Swiper>
         </span>
 
@@ -739,29 +794,50 @@ const Home = () => {
             loop={true}
           >
 
-            {ethRaffles.map((raffle, index) => {
+            {ethRaffles ?
 
-              var time = parseInt(raffle.lastTimeStamp._hex)
-              var lastTimeStamp = new Date(time * 1000 + 1000 * 60 * 2.25);
+              ethRaffles.map((raffle, index) => {
 
-              return (
+                var time = parseInt(raffle.lastTimeStamp._hex)
+                var lastTimeStamp = new Date(time * 1000 + 1000 * 60 * 2.25);
 
-                <SwiperSlide key={index}>
+                return (
 
-                  <RaffleComponent
-                    key={index}
-                    raffle={raffle}
-                    index={index}
-                    lastTimeStamp={lastTimeStamp}
-                    chain={"Ethereum"}
-                    currency={"ETH"}
-                    enterRaffle={enterEthRaffle}
-                  />
-                </SwiperSlide>
+                  <SwiperSlide key={index}>
 
-              )
+                    <RaffleComponent
+                      key={index}
+                      raffle={raffle}
+                      index={index}
+                      lastTimeStamp={lastTimeStamp}
+                      chain={"Ethereum"}
+                      currency={"ETH"}
+                      enterRaffle={enterEthRaffle}
+                    />
+                  </SwiperSlide>
 
-            })}
+                )
+
+              })
+              :
+
+
+              <SwiperSlide >
+                <span className={`col-start-1 row-start-2 row-end-3 grid grid-rows-[50px,50px,50px,50px,50px,50px,50px] max-w-[600px] bg-[#1e1d45] rounded mx-auto	 `}>
+
+                  <span className={`bg-[grey] mx-auto w-[80%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-auto w-[80%] self-center h-[35px] rounded animate-pulse `}>  </span>
+
+                </span>
+
+              </SwiperSlide >
+
+            }
 
           </Swiper>
         </span>
@@ -790,28 +866,47 @@ const Home = () => {
             loop={true}
           >
 
-            {bcsRaffles.map((raffle, index) => {
+            {bcsRaffles ?
 
-              var time = parseInt(raffle.lastTimeStamp._hex)
-              var lastTimeStamp = new Date(time * 1000 + 1000 * 60 * 2.25);
-              return (
+              bcsRaffles.map((raffle, index) => {
 
-                <SwiperSlide key={index}>
+                var time = parseInt(raffle.lastTimeStamp._hex)
+                var lastTimeStamp = new Date(time * 1000 + 1000 * 60 * 2.25);
+                return (
 
-                  <RaffleComponent
-                    key={index}
-                    raffle={raffle}
-                    index={index}
-                    lastTimeStamp={lastTimeStamp}
-                    chain={"Binance"}
-                    currency={"BNB"}
-                    enterRaffle={enterBSCRaffle}
-                  />
-                </SwiperSlide>
+                  <SwiperSlide key={index}>
 
-              )
+                    <RaffleComponent
+                      key={index}
+                      raffle={raffle}
+                      index={index}
+                      lastTimeStamp={lastTimeStamp}
+                      chain={"Binance"}
+                      currency={"BNB"}
+                      enterRaffle={enterBSCRaffle}
+                    />
+                  </SwiperSlide>
 
-            })}
+                )
+
+              })
+              :
+
+              <SwiperSlide >
+                <span className={`col-start-1 row-start-2 row-end-3 grid grid-rows-[50px,50px,50px,50px,50px,50px,50px] max-w-[600px] bg-[#1e1d45] rounded mx-auto	 `}>
+
+                  <span className={`bg-[grey] mx-auto w-[80%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-auto w-[80%] self-center h-[35px] rounded animate-pulse `}>  </span>
+
+                </span>
+
+              </SwiperSlide >
+            }
 
           </Swiper>
         </span>
@@ -840,28 +935,48 @@ const Home = () => {
             loop={true}
           >
 
-            {avaxRaffles.map((raffle, index) => {
+            {avaxRaffles ?
 
-              var time = parseInt(raffle.lastTimeStamp._hex)
-              var lastTimeStamp = new Date(time * 1000 + 1000 * 60 * 2.25);
-              return (
+              avaxRaffles.map((raffle, index) => {
 
-                <SwiperSlide key={index}>
+                var time = parseInt(raffle.lastTimeStamp._hex)
+                var lastTimeStamp = new Date(time * 1000 + 1000 * 60 * 2.25);
+                return (
 
-                  <RaffleComponent
-                    key={index}
-                    raffle={raffle}
-                    index={index}
-                    lastTimeStamp={lastTimeStamp}
-                    chain={"Avalanche"}
-                    currency={"AVAX"}
-                    enterRaffle={enterAVAXRaffle}
-                  />
-                </SwiperSlide>
+                  <SwiperSlide key={index}>
 
-              )
+                    <RaffleComponent
+                      key={index}
+                      raffle={raffle}
+                      index={index}
+                      lastTimeStamp={lastTimeStamp}
+                      chain={"Avalanche"}
+                      currency={"AVAX"}
+                      enterRaffle={enterAVAXRaffle}
+                    />
+                  </SwiperSlide>
 
-            })}
+                )
+
+              })
+              :
+
+              <SwiperSlide >
+                <span className={`col-start-1 row-start-2 row-end-3 grid grid-rows-[50px,50px,50px,50px,50px,50px,50px] max-w-[600px] bg-[#1e1d45] rounded mx-auto	 `}>
+
+                  <span className={`bg-[grey] mx-auto w-[80%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-4 w-[30%] self-center h-[35px] rounded animate-pulse `}>  </span>
+                  <span className={`bg-[grey] mx-auto w-[80%] self-center h-[35px] rounded animate-pulse `}>  </span>
+
+                </span>
+
+              </SwiperSlide >
+
+            }
 
           </Swiper>
 
