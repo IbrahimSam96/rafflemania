@@ -13,9 +13,9 @@
 
 ## Features
 
-Users would be able to enter for a draw on 4 diffrent raffles in 4 diffrent chains.
+Users would be able to enter for a draw to win crypto on 4 diffrent chains.
 
-- Entering a raffle
+- Entering 4 raffles each with diffrent entrance fee 
 - Firewroks when you win :)
 
 ## Sponsor Tools
@@ -30,6 +30,6 @@ Users would be able to enter for a draw on 4 diffrent raffles in 4 diffrent chai
 
 ## Future Work
 
-- Allocate 5% of each winning pool to a grand lottery for a draw every week. RAFFLEMANIA!
+- Allocate 3% of each winning pool to a grand lottery for a draw every week. RAFFLEMANIA!
 
 ** I removed previous commit history because I accidentally leaked my private key. Oops**
