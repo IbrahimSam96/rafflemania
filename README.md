@@ -5,7 +5,7 @@
 ## Authors
 - [Ibrahim Samara](https://github.com/IbrahimSam96)
 
-## Contracts available on explorers:
+## Contracts available on:
 -  [Polygon](https://mumbai.polygonscan.com/address/0xd9C2E248e337724b7BF59a8fAE5Cd227AEda2D07)
 -  [Ethereum](https://goerli.etherscan.io/address/0x27f6A119986a5b6Dc4C835a278D23E4F5e87A021)
 -  [Binance](https://testnet.bscscan.com/address/0xF0Fc1203988C36c65e17d22e1145E515BcE0088C) 
