@@ -13,15 +13,13 @@
 
 ## Features
 
-Users would be able to enter for a draw to win crypto on 4 diffrent chains.
-
-- Entering 4 raffles each with diffrent entrance fee 
+- A fair chance to enter and win 4 diffrent raffles 
 - Firewroks when you win :)
 
 ## Sponsor Tools
 
 - Chainlink VRF & Keepers
-- Spheron
+- Spheron 
 
 
 ## Acknowledgements
@@ -30,6 +28,6 @@ Users would be able to enter for a draw to win crypto on 4 diffrent chains.
 
 ## Future Work
 
-- Allocate 3% of each winning pool to a grand lottery for a draw every week. RAFFLEMANIA!
+- Improve announcing raffle winner. (Add sound + conditionally render fireworks).
 
 ** I removed previous commit history because I accidentally leaked my private key. Oops**
