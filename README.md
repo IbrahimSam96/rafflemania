@@ -30,4 +30,3 @@
 
 - Improve announcing raffle winner. (Add sound + conditionally render fireworks).
 
-** I removed previous commit history because I accidentally leaked my private key. Oops**
