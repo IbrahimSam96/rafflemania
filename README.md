@@ -1,4 +1,4 @@
-# [Rafflemania](https://rafflemania.vercel.app/) - Polygon Buidl It - Summer 22'
+# [Rafflemania](https://rafflemania-f82x77.spheron.app/) - Polygon Buidl It - Summer 22'
 
 <img src="https://github.com/IbrahimSam96/rafflemania/blob/master/public/RaffleMania.png" width="600">
 
