@@ -6,7 +6,7 @@
 ## Authors
 - [Ibrahim Samara](https://github.com/IbrahimSam96)
 
-## Contracts available on:
+## Verified Contracts available on:
 -  [Polygon](https://mumbai.polygonscan.com/address/0x9053Fe244941044A403C1C64f09A52018Ec97ab2)
 -  [Ethereum](https://goerli.etherscan.io/address/0x01cA7982817B93923288Bd6DBc0868F36eD84e19)
 -  [Binance](https://testnet.bscscan.com/address/0x01cA7982817B93923288Bd6DBc0868F36eD84e19) 
