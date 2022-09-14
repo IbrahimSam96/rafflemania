@@ -1,6 +1,7 @@
 # [Rafflemania](https://rafflemania-f82x77.spheron.app/) - Polygon Buidl It - Summer 22'
 
 <img src="https://github.com/IbrahimSam96/rafflemania/blob/master/public/RaffleMania.png" width="600">
+<img src="https://github.com/IbrahimSam96/rafflemania/blob/master/public/RaffleManiaWinner.png" width="600">
 
 ## Authors
 - [Ibrahim Samara](https://github.com/IbrahimSam96)
