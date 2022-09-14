@@ -1,1 +1,1 @@
-export const bnbAddress = "0xF0Fc1203988C36c65e17d22e1145E515BcE0088C"
+export const bnbAddress = "0x01cA7982817B93923288Bd6DBc0868F36eD84e19"

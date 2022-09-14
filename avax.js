@@ -1,1 +1,1 @@
-export const avaxAddress = "0x23B1fdA3F4545A2746d5cEB2d6A9BCEf359d51d2"
+export const avaxAddress = "0x01cA7982817B93923288Bd6DBc0868F36eD84e19"
