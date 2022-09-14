@@ -177,7 +177,7 @@ const Home = () => {
 
   // Binance Endpoint
   useEffect(() => {
-    const provider = new ethers.providers.JsonRpcProvider("https://rpc.ankr.com/bsc_testnet_chapel");
+    const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
     const contract = new ethers.Contract(bnbAddress, Raffle.abi, provider);
 
     contract.on('RaffleEnter', (address, raffle) => {
@@ -608,7 +608,7 @@ const Home = () => {
   }
 
   const getBSCRafflesInfo = async () => {
-    const provider = new ethers.providers.JsonRpcProvider("https://rpc.ankr.com/bsc_testnet_chapel");
+    const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
     const contract = new ethers.Contract(bnbAddress, Raffle.abi, provider);
     const data = await contract.getallRaffles();
     setBcsRaffles(data);
