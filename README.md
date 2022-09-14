@@ -1,15 +1,16 @@
 # [Rafflemania](https://rafflemania-f82x77.spheron.app/) - Polygon Buidl It - Summer 22'
 
 <img src="https://github.com/IbrahimSam96/rafflemania/blob/master/public/RaffleMania.png" width="600">
+<img src="https://github.com/IbrahimSam96/rafflemania/blob/master/public/RaffleManiaWinner.png" width="300">
 
 ## Authors
 - [Ibrahim Samara](https://github.com/IbrahimSam96)
 
-## Contracts available on:
--  [Polygon](https://mumbai.polygonscan.com/address/0xd9C2E248e337724b7BF59a8fAE5Cd227AEda2D07)
--  [Ethereum](https://goerli.etherscan.io/address/0x27f6A119986a5b6Dc4C835a278D23E4F5e87A021)
--  [Binance](https://testnet.bscscan.com/address/0xF0Fc1203988C36c65e17d22e1145E515BcE0088C) 
--  [Avalanche](https://testnet.snowtrace.io/address/0x23B1fdA3F4545A2746d5cEB2d6A9BCEf359d51d2)
+## Verified Contracts available on:
+-  [Polygon](https://mumbai.polygonscan.com/address/0x9053Fe244941044A403C1C64f09A52018Ec97ab2)
+-  [Ethereum](https://goerli.etherscan.io/address/0x01cA7982817B93923288Bd6DBc0868F36eD84e19)
+-  [Binance](https://testnet.bscscan.com/address/0x01cA7982817B93923288Bd6DBc0868F36eD84e19) 
+-  [Avalanche](https://testnet.snowtrace.io/address/0x01cA7982817B93923288Bd6DBc0868F36eD84e19)
 
 ## Features
 
